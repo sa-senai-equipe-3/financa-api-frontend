@@ -33,6 +33,7 @@ import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.Format;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -46,7 +47,7 @@ public class TelaTituloAddEdt extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JFormattedTextField valorEdt;
+	private JTextField valorEdt;
 	private JFormattedTextField venctoEdt;
 	private JTextField bancoEdt;
 	private JTextField descricaoEdt;
@@ -83,7 +84,7 @@ public class TelaTituloAddEdt extends JFrame {
 		JLabel valorLbl = new JLabel("Valor (R$)");
 		valorLbl.setFont(new Font("Nirmala UI", Font.PLAIN, 15));
 
-		valorEdt = new JFormattedTextField(new MaskFormatter("#.###,##"));
+ 		valorEdt = new JTextField();
 		valorEdt.setFont(new Font("Nirmala UI", Font.PLAIN, 15));
 		valorEdt.setColumns(10);
 
@@ -128,6 +129,10 @@ public class TelaTituloAddEdt extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {	
 					if (tituloParaEdicao != null) {
+						if (valorEdt.getText().isBlank() || valorEdt.getText().matches("^[0-9]")) {
+							JOptionPane.showMessageDialog(null, "O valor do titulo nao pode ser vazio");
+							return;
+						}
 						tituloParaEdicao.setValor(BigDecimal.valueOf(Double.parseDouble(valorEdt.getText())));
 						tituloParaEdicao.setDescricao(descricaoEdt.getText());
 						tituloParaEdicao.setDataVencimento(getDataVencimento());
@@ -136,6 +141,10 @@ public class TelaTituloAddEdt extends JFrame {
 						tituloClient.alterar(tituloParaEdicao);
 						JOptionPane.showMessageDialog(null, "Titulo alterado com sucesso!");
 					} else {
+						if (valorEdt.getText().isBlank() || valorEdt.getText().matches("^[0-9]")) {
+							JOptionPane.showMessageDialog(null, "O valor do titulo nao pode ser vazio");
+							return;
+						}
 						Titulo tituloNovo = new Titulo();
 						tituloNovo.setValor(BigDecimal.valueOf(Double.parseDouble(valorEdt.getText())));
 						tituloNovo.setDescricao(descricaoEdt.getText());
@@ -232,10 +241,21 @@ public class TelaTituloAddEdt extends JFrame {
 	}
 
 	public LocalDate getDataVencimento() {
+		if (venctoEdt.getText().equals("  /  /    ")) {
+			JOptionPane.showMessageDialog(contentPane, "A data de vencimento nao pode ser vazia");
+		}
 		String[] diaMesAno = venctoEdt.getText().split("/");
 		Integer ano = Integer.parseInt(diaMesAno[2]);
 		Integer mes = Integer.parseInt(diaMesAno[1]);
 		Integer dia = Integer.parseInt(diaMesAno[0]);
+		
+		if (mes > 12 || mes < 1) {
+			JOptionPane.showMessageDialog(null, "Data invalida");
+		}
+		
+		if (dia > 31 || dia < 1) {
+			JOptionPane.showMessageDialog(null, "Data invalida");
+		}
 
 		return LocalDate.of(ano, mes, dia);
 	}
