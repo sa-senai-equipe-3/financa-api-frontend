@@ -206,6 +206,14 @@ public class TelaFornecedorAddEdt extends JFrame {
 		}
 	}
 	
+	public void clear() {
+		razaoEdt.setText("");
+		nomeFantasiaEdt.setText("");
+		cnpjEdt.setText("");
+		loginEdt.setText("");
+		senhaEdt.setText("");
+	}
+	
 	public String formatException(String excpetion) {
 		String[] exceptionFields = excpetion.split("\"");
 		

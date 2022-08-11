@@ -245,4 +245,11 @@ public class TelaTituloAddEdt extends JFrame {
 		
 		return exceptionFields[7];
 	}
+	
+	public void clear() {
+		valorEdt.setText("");
+		venctoEdt.setText("");
+		bancoEdt.setText("");
+		descricaoEdt.setText("");
+	}
 }

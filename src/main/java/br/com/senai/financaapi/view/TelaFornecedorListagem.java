@@ -66,6 +66,7 @@ public class TelaFornecedorListagem extends JFrame {
 		adicionarBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
+				telaFornecedorAdd.clear();
 				telaFornecedorAdd.setVisible(true);
 			}
 		});

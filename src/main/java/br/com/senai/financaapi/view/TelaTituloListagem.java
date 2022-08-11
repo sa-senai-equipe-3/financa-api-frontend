@@ -72,6 +72,7 @@ public class TelaTituloListagem extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				telaTituloAdd.inicializar(null);
+				telaTituloAdd.clear();
 				telaTituloAdd.setVisible(true);
 			}
 		});
